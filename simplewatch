@@ -1,0 +1,16 @@
+# Simple Robocopy Watch Folder Script (PowerShell)
+
+$sourceFolder = "C:\SourceFolder"        # Folder to watch
+$destinationFolder = "D:\Destination"    # Where to move files
+$excludePattern = "*.tmp"                # Files to ignore
+
+while ($true) {
+# Copy files excluding .tmp
+robocopy $sourceFolder $destinationFolder /MOV /XF $excludePattern /R:1 /W:1 /LOG+:C:\temp\robocopy_log.txt
+
+```
+# Wait a few seconds before checking again
+Start-Sleep -Seconds 5
+```
+
+}
