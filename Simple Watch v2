@@ -1,0 +1,35 @@
+# Robocopy Watch Folder with Colors, Error & Sound Alerts
+
+$sourceFolder = "C:\SourceFolder"        # Folder to watch
+$destinationFolder = "D:\Destination"    # Where to move files
+$excludePattern = "*.tmp"                # Files to ignore
+$logFile = "C:\temp\robocopy_log.txt"   # Log file
+
+# Ensure log folder exists
+
+if (!(Test-Path "C:\temp")) { New-Item -ItemType Directory -Path "C:\temp" | Out-Null }
+
+while ($true) {
+Write-Host "`nChecking for new files..." -ForegroundColor Cyan
+
+```
+# Run robocopy
+$robocopyResult = robocopy $sourceFolder $destinationFolder /MOV /XF $excludePattern /R:1 /W:1 /LOG:$logFile /NFL /NDL /NJH /NJS /NC /NS /NP
+
+# Robocopy sets %ERRORLEVEL% to 0,1, or higher
+$exitCode = $LASTEXITCODE
+
+if ($exitCode -eq 0) {
+    Write-Host "No files to move." -ForegroundColor Yellow
+} elseif ($exitCode -le 1) {
+    Write-Host "Files moved successfully." -ForegroundColor Green
+    [console]::beep(800, 200)  # Short success beep
+} else {
+    Write-Host "Error occurred during move!" -ForegroundColor Red
+    [console]::beep(500, 500)  # Longer error beep
+}
+
+Start-Sleep -Seconds 5
+```
+
+}
